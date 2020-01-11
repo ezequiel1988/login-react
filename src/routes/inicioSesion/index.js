@@ -2,14 +2,15 @@ import React from 'react';
 import { Button, Divider, Form, Grid, Segment } from 'semantic-ui-react'
 import { observer } from 'mobx-react-lite';
 import { inject } from 'mobx-react';
-import { useHistory, useLocation, Redirect } from 'react-router-dom';
+import { Redirect, useHistory, useLocation } from 'react-router-dom';
+
 
 
 const InicioSesion = observer((props) => {
 
   let history = useHistory();
   let location = useLocation();
-  let { from } = location.state || { from: { pathname: "/" } };
+  let { from } = location.state || { from: { pathname: "/register" } };
 
   const changeEmail = (e)=> {
     props.store.email = e.target.value
@@ -19,14 +20,12 @@ const InicioSesion = observer((props) => {
     props.store.password = e.target.value
   }
 
+  const registrarse = () => {
+    history.replace(from);
+  }
+
   const login = async ()=> {
-   try {
-      const { data } = await props.store.loginPost();
-      props.store.userToken = data.data.token;
-      console.log(props.store.userToken);
-    } catch (error) {
-      console.log(error)
-    }
+    props.store.loginPost();
   }
 
   return props.store.userToken == null ?
@@ -59,7 +58,7 @@ const InicioSesion = observer((props) => {
       </Grid.Column>
 
       <Grid.Column verticalAlign='middle'>
-        <Button content='Registrarse' icon='signup' size='big' />
+        <Button content='Registrarse' icon='signup' positive onClick={()=> registrarse()} size='big' />
       </Grid.Column>
     </Grid>
 

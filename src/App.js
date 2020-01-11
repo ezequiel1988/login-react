@@ -10,7 +10,7 @@ import {
   Switch,
   Route,
   Link,
-  Redirect
+  Redirect,
 } from "react-router-dom";
 import InicioSesion from './routes/inicioSesion';
 import UserProfile from './routes/home/index';
@@ -21,7 +21,8 @@ import { Home } from '@material-ui/icons';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import { AccountCircle } from '@material-ui/icons';
 import { inject } from 'mobx-react';
-
+import Registro from './routes/registro';
+import HowToRegIcon from '@material-ui/icons/HowToReg';
 
 
 
@@ -53,6 +54,13 @@ function App(props) {
           </ListItemIcon>
             <Link to="/profile">Perfil</Link>
         </ListItem>
+
+        <ListItem button>
+          <ListItemIcon onClick={()=> cerrarSesion()}>
+            <AccountCircle />
+          </ListItemIcon>
+            <Link to="/">Cerrar Sesión</Link>
+        </ListItem>
       </List>
     )
   }
@@ -66,9 +74,21 @@ function App(props) {
           </ListItemIcon>
           <Link to="/">Iniciar Sesion</Link>
         </ListItem>
+
+        <ListItem button>
+          <ListItemIcon>
+            <HowToRegIcon />
+          </ListItemIcon>
+          <Link to="/register">Registrarse</Link>
+        </ListItem>
       </List>
     )
   }
+
+  let cerrarSesion = () => {
+    props.store.loginDelete();
+  }
+
   const sideList = (side, token) => (
     <div
       role="presentation"
@@ -77,7 +97,7 @@ function App(props) {
     >
     {
       token != null ?
-        buttonHome()
+        buttonHome(token)
         :
         inicioButton()
     }
@@ -107,6 +127,12 @@ function App(props) {
             path="/profile"
             render={() => <UserProfile />}
             />
+             <Route
+            exact
+            path="/register"
+            render={() => <Registro />}
+            />
+            <Redirect from='/' to='/profile' />
       </Switch>
 
     <Drawer open={state.left} onClose={toggleDrawer('left', false)}>
