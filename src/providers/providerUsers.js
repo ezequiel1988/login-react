@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-export default class Providers {
+export default class UsersProviders {
 
     postLogin (email, password) {
        return axios.post('http://localhost:4000/login', {email:email, password:password})

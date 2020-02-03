@@ -7,37 +7,37 @@ import CircularProgress from '@material-ui/core/CircularProgress';
 
 
 
-let Registro = inject("store")(observer( props => {
+let Registro = inject('UserStore')(observer( props => {
 
     let history = useHistory();
     let location = useLocation();
     let { from } = location.state || { from: { pathname: "/" } };
 
     const changeEmail = (e)=> {
-        props.store.email = e.target.value
+        props.UserStore.email = e.target.value
       }
     
       const changePass = (e)=> {
-        props.store.password = e.target.value
+        props.UserStore.password = e.target.value
       }
       const changeNombre = (e)=> {
-        props.store.nombre = e.target.value
+        props.UserStore.nombre = e.target.value
       }
     
       const changeApellido = (e)=> {
-        props.store.apellido = e.target.value
+        props.UserStore.apellido = e.target.value
       }
 
       const registrarse = () => {
-          props.store.userPost();
-          props.store.showHome =  true;
+          props.UserStore.userPost();
+          props.UserStore.showHome =  true;
           setTimeout(()=>{
             history.replace(from);
-            props.store.showHome =  false;
+            props.UserStore.showHome =  false;
           },2000)
       }
 
-    return !props.store.showHome ?
+    return !props.UserStore.showHome ?
     <Segment placeholder>
         <Grid columns={2} relaxed='very' stackable>
             <Grid.Column verticalAlign='middle'>
@@ -55,7 +55,7 @@ let Registro = inject("store")(observer( props => {
                     label='Nombre'
                     placeholder='Nombre'
                     type="text"
-                    value={props.store.nombre}
+                    value={props.UserStore.nombre}
                     onChange={(e)=> changeNombre(e)}
                 />
                 <Form.Input
@@ -64,7 +64,7 @@ let Registro = inject("store")(observer( props => {
                     label='Apellido'
                     type='text'
                     placeholder='apellido'
-                    value={props.store.apellido}
+                    value={props.UserStore.apellido}
                     onChange={(e)=> changeApellido(e)}
                 />
                 <Form.Input
@@ -73,7 +73,7 @@ let Registro = inject("store")(observer( props => {
                     label='Email'
                     placeholder='Email'
                     type="email"
-                    value={props.store.email}
+                    value={props.UserStore.email}
                     onChange={(e)=> changeEmail(e)}
                 />
                 <Form.Input
@@ -82,7 +82,7 @@ let Registro = inject("store")(observer( props => {
                     label='Password'
                     type='password'
                     placeholder='password'
-                    value={props.store.password}
+                    value={props.UserStore.password}
                     onChange={(e)=> changePass(e)}
                 />
                 <Form.Field>

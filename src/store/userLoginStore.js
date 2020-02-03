@@ -1,16 +1,16 @@
-import Providers from "../providers/provider";
+import UsersProviders from "../providers/providerUsers";
 import { decorate, observable } from 'mobx';
 
 
 class userLoginStore {
 
-    rest = new Providers()
+    rest = new UsersProviders()
 
     constructor(){
         this.nombre="";
         this.apellido="";
-        this.email= "";
-        this.password="";
+        this.email= "eze@email.com";
+        this.password="secreto";
         this.userToken= null;
         this.showHome = false;
     }
@@ -42,6 +42,7 @@ class userLoginStore {
        try {
 
         const { data } = await this.rest.deleteLogin(this.userToken, this.email, this.password);
+        this.userToken = null;
         console.log(data)
            
        } catch (e) {

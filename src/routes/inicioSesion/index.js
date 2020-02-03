@@ -10,25 +10,28 @@ const InicioSesion = observer((props) => {
 
   let history = useHistory();
   let location = useLocation();
-  let { from } = location.state || { from: { pathname: "/register" } };
+  let { from } = location.state || { from: { pathname: "/" } };
 
   const changeEmail = (e)=> {
-    props.store.email = e.target.value
+    props.UserStore.email = e.target.value
   }
 
   const changePass = (e)=> {
-    props.store.password = e.target.value
+    props.UserStore.password = e.target.value
   }
 
   const registrarse = () => {
-    history.replace(from);
+    history.push('register');
   }
 
   const login = async ()=> {
-    props.store.loginPost();
+    props.UserStore.loginPost();
+    history.replace(from);
+
   }
 
-  return props.store.userToken == null ?
+  return (
+    props.UserStore.userToken == null ?
     <Segment placeholder>
     <Grid columns={2} relaxed='very' stackable>
       <Grid.Column>
@@ -39,7 +42,7 @@ const InicioSesion = observer((props) => {
             label='Email'
             placeholder='Email'
             type="email"
-            value={props.store.email}
+            value={props.UserStore.email}
             onChange={(e)=> changeEmail(e)}
           />
           <Form.Input
@@ -48,7 +51,7 @@ const InicioSesion = observer((props) => {
             label='Password'
             type='password'
             placeholder='password'
-            value={props.store.password}
+            value={props.UserStore.password}
             onChange={(e)=> changePass(e)}
 
           />
@@ -64,9 +67,11 @@ const InicioSesion = observer((props) => {
 
     <Divider vertical>O</Divider>
   </Segment>
+
   :
-  <Redirect to='/profile' />
+    <Redirect to='/home' />
+  )
 })
 
 
-export default (inject("store"))(InicioSesion);
+export default (inject("UserStore"))(InicioSesion);
